@@ -121,6 +121,10 @@ namespace Proiect_SPRC
                                 c1.BackColor = Color.Red;
                                 
                             }
+                            else
+                            {
+                                c1.BackColor = Color.Gainsboro;
+                            }
                         }
                     }
                     
@@ -128,7 +132,8 @@ namespace Proiect_SPRC
             }
         }
 
-        private void checkNeighbours1(TextBox c, TextBox t, List<Control> textBoxes, int x)
+        /*
+        private void checkNeighbours1(TextBox c, TextBox t, List<Control> textBoxes, int )
         {
             
             if ((Int32.Parse(c.Name) % 10 == Int32.Parse(t.Name) % 10 && c.Text == t.Text) || (Int32.Parse(c.Name) / 10 == Int32.Parse(t.Name) / 10 && c.Text == t.Text))
@@ -148,7 +153,7 @@ namespace Proiect_SPRC
 
             }
         }
-
+        */
 
 
 
