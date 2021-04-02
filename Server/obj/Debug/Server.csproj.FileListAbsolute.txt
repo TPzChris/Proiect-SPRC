@@ -1,0 +1,45 @@
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\bin\Debug\Server.exe.config
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\bin\Debug\Server.exe
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\bin\Debug\Server.pdb
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\bin\Debug\IConnection.dll
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\bin\Debug\IConnection.pdb
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\obj\Debug\Server.exe
+c:\users\du.slc\documents\visual studio 2012\Projects\Server\Server\obj\Debug\Server.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\bin\Debug\Server.exe.config
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\bin\Debug\Server.exe
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\bin\Debug\Server.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\bin\Debug\IConnection.dll
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\bin\Debug\IConnection.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\obj\Debug\Server.exe
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Server\obj\Debug\Server.pdb
+d:\_Work\C#\Async2\TcpAsync\Server\bin\Debug\Server.exe.config
+d:\_Work\C#\Async2\TcpAsync\Server\bin\Debug\Server.exe
+d:\_Work\C#\Async2\TcpAsync\Server\bin\Debug\Server.pdb
+d:\_Work\C#\Async2\TcpAsync\Server\bin\Debug\IConnection.dll
+d:\_Work\C#\Async2\TcpAsync\Server\bin\Debug\IConnection.pdb
+d:\_Work\C#\Async2\TcpAsync\Server\obj\Debug\Server.exe
+d:\_Work\C#\Async2\TcpAsync\Server\obj\Debug\Server.pdb
+d:\_Work\C#\Async2\TcpAsync\Server\obj\Debug\Server.csprojAssemblyReference.cache
+d:\_Work\C#\Async2\TcpAsync\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+d:\_Work\C#\Async2\TcpAsync\Server\obj\Debug\Server.csproj.CopyComplete
+H:\SPRC\C#\TcpAsync\Server\bin\Debug\Server.exe.config
+H:\SPRC\C#\TcpAsync\Server\bin\Debug\Server.exe
+H:\SPRC\C#\TcpAsync\Server\bin\Debug\Server.pdb
+H:\SPRC\C#\TcpAsync\Server\bin\Debug\IConnection.dll
+H:\SPRC\C#\TcpAsync\Server\bin\Debug\IConnection.pdb
+H:\SPRC\C#\TcpAsync\Server\obj\Debug\Server.csprojAssemblyReference.cache
+H:\SPRC\C#\TcpAsync\Server\obj\Debug\Server.csproj.CopyComplete
+H:\SPRC\C#\TcpAsync\Server\obj\Debug\Server.exe
+H:\SPRC\C#\TcpAsync\Server\obj\Debug\Server.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\bin\Debug\Server.exe.config
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\bin\Debug\Server.exe
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\bin\Debug\Server.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\bin\Debug\IConnection.dll
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\bin\Debug\IConnection.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.csprojAssemblyReference.cache
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.csproj.CopyComplete
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.exe
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.pdb

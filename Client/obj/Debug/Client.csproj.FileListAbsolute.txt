@@ -1,0 +1,108 @@
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\bin\Debug\Client.exe.config
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\bin\Debug\Client.exe
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\bin\Debug\Client.pdb
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.ChatBox.resources
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.RequestName.resources
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.Properties.Resources.resources
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.exe
+c:\Users\du.SLC\documents\visual studio 2012\Projects\Server\Client\obj\Debug\Client.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\Server\Client\bin\Debug\IConnection.dll
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\Server\Client\bin\Debug\IConnection.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\bin\Debug\Client.exe.config
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\bin\Debug\Client.exe
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\bin\Debug\Client.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\bin\Debug\IConnection.dll
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\bin\Debug\IConnection.pdb
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.ChatBox.resources
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.RequestName.resources
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.exe
+C:\Users\du.SLC\Documents\Visual Studio 2012\Projects\TcpAsync\Client\obj\Debug\Client.pdb
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Client.exe.config
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.exe
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.pdb
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Client.exe
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Client.pdb
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\IConnection.dll
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\IConnection.pdb
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.ChatBox.resources
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.RequestName.resources
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.Properties.Resources.resources
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.csprojAssemblyReference.cache
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+d:\_Work\C#\Async2\TcpAsync\Client\obj\Debug\Client.csproj.CopyComplete
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Server.exe
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Server.pdb
+d:\_Work\C#\Async2\TcpAsync\Client\bin\Debug\Server.exe.config
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.csprojAssemblyReference.cache
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.ChatBox.resources
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.RequestName.resources
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.Properties.Resources.resources
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.csproj.GenerateResource.cache
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.exe
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.pdb
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\IConnection.dll
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Server.exe
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\IConnection.pdb
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Server.pdb
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Server.exe.config
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Client.exe.config
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Client.exe
+H:\SPRC\C#\TcpAsync\Client\bin\Debug\Client.pdb
+H:\SPRC\C#\TcpAsync\Client\obj\Debug\Client.csproj.CopyComplete
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Client.exe.config
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Client.exe
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Client.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\IConnection.dll
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Server.exe
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\IConnection.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Server.pdb
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\bin\Debug\Server.exe.config
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.csprojAssemblyReference.cache
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.ChatBox.resources
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.RequestName.resources
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.Properties.Resources.resources
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.csproj.GenerateResource.cache
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.csproj.CopyComplete
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.exe
+W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Client\obj\Debug\Client.pdb
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.csprojAssemblyReference.cache
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.ChatBox.resources
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.RequestName.resources
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.Properties.Resources.resources
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.csproj.GenerateResource.cache
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.exe
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.pdb
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Client.exe.config
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Client.exe
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Client.pdb
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\IConnection.dll
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Server.exe
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\IConnection.pdb
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Server.pdb
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\bin\Debug\Server.exe.config
+W:\Facultate\SPRC\Proiect\TcpAsync\Client\obj\Debug\Client.csproj.CopyComplete
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Client.exe.config
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Client.exe
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Client.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\IConnection.dll
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Server.exe
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\IConnection.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Server.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\bin\Debug\Server.exe.config
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csprojAssemblyReference.cache
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.ChatBox.resources
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.RequestName.resources
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.Properties.Resources.resources
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csproj.GenerateResource.cache
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csproj.CopyComplete
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.exe
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.pdb
