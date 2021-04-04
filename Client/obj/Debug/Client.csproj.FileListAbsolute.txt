@@ -106,3 +106,4 @@ W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csproj.CoreCompil
 W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.csproj.CopyComplete
 W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.exe
 W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Client\obj\Debug\Client.UserControl1.resources

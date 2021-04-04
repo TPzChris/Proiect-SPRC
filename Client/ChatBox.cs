@@ -15,9 +15,13 @@ namespace Client
         private List<String> selectedUsers = new List<String>();
         private bool isPrivate = false;
         private Dictionary<int, string> oldValues = new Dictionary<int, string>();
+        private bool isPencil = false;
+        Dictionary<TextBox, List<Label>> tbLabels = new Dictionary<TextBox, List<Label>>();
+        List<Label> activeLabels = new List<Label>();
 
         public ChatBox(TCPConnection con)
         {
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
             this.con = con;
             con.OnReceiveCompleted += con_OnReceiveCompleted;
@@ -221,7 +225,7 @@ namespace Client
         private void Item_MouseClick(object sender, MouseEventArgs e)
         {
             var x = sender as ListBox;
-            string server = "127.0.0.1";
+            //string server = "127.0.0.1";
         }
 
 
@@ -265,17 +269,38 @@ namespace Client
             foreach (TextBox t in textBoxes)
             {
                 t.TextChanged += Cell_TextChanged;
+                t.MouseEnter += TextBox_OnEnter;
+                t.MouseLeave += TextBox_OnLeave;
+                
             }
 
         }
 
+        private void Cell_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            var tb = sender as TextBox;
+            Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<Label>().ToList().Where(x => x.Name == tb.Name + "_" + tb.Text).ToList().ForEach(u => u.Visible = true));
+        }
 
+        private void TextBox_OnLeave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var label = new Label();
+            //Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<TextBox>().ToList().Where(x => x.Name == textBox.Name).ToList().ForEach(y => y.Controls.OfType<Label>().ToList().Where(z => z.Name.EndsWith("5")).ToList().ForEach(u => MessageBox.Show(u.Name))));
+            Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<Label>().ToList().Where(x => x.Name == textBox.Name + "_5").ToList().ForEach(u => label = u));
+            label.BringToFront();
+        }
+
+        private void TextBox_OnEnter(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            textBox.BringToFront();
+        }
 
         private void Cell_TextChanged(object sender, EventArgs e)
         {
             List<string> numbers = new List<string>() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "" };
             var cell = sender as TextBox;
-
             //MessageBox.Show(cell.Text);
             if (!numbers.Contains(cell.Text))
             {
@@ -285,14 +310,45 @@ namespace Client
             }
             else
             {
-                if (cell.Text != "")
+                if (isPencil == true)
                 {
-                    oldValues[int.Parse(cell.Name)] = cell.Text;
-                    checkNeighbours(cell, Color.Red);
+                    Label label = new Label();
+                    
+                    Controls.Find("panel1", true).ToList()
+                        .ForEach(t => t.Controls.OfType<Label>()
+                        .ToList()
+                        .Where(x => x.Name == cell.Name + "_" + cell.Text)
+                        .ToList().ForEach(y => { label = y; cell.Clear(); }));//Where(u => u.Visible ? MessageBox.Show("true") : {u.Visible = true; u.BringToFront(); cell.Clear(); activeLabels.Add(u); })//.  (u.Visible ? MessageBox("true") : { u.Visible = true; u.BringToFront(); cell.Clear(); activeLabels.Add(u); }) > 0));
+                    if (label.Visible)
+                    {
+                        label.Visible = false;
+                        cell.BringToFront();
+                        activeLabels.Remove(label);
+                    }
+                    else
+                    {
+                        label.Visible = true;
+                        label.BringToFront(); 
+                        activeLabels.Add(label);
+                    }
+                    tbLabels[cell] = activeLabels;
                 }
                 else
                 {
-                    fixNeighbours(cell);
+                    Controls.Find("panel1", true).ToList()
+                        .ForEach(t => t.Controls.OfType<Label>()
+                        .ToList()
+                        .Where(x => x.Name.StartsWith(cell.Name + "_")).ToList().ForEach(y => y.Visible = false));
+                    tbLabels[cell].Clear();
+                    if (cell.Text != "")
+                    {
+                        oldValues[int.Parse(cell.Name)] = cell.Text;
+                        checkNeighbours(cell, Color.Red);
+                    }
+                    else
+                    {
+                        fixNeighbours(cell);
+                    }
                 }
             }
 
@@ -302,21 +358,45 @@ namespace Client
         private void generateCells()
         {
             TextBox[] cells = new TextBox[100];
+            
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
                     var txt = new TextBox();
                     txt.Size = new System.Drawing.Size(20, 20);
-
                     Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.Add(txt));
                     cells[i + 10 * j] = txt;
                     txt.Name = (i + 10 * j).ToString();
                     txt.Text = "";
                     txt.Location = new Point(15 + i * 50, 15 + j * 50);
+                    txt.ForeColor = Color.Black;
                     txt.BackColor = Color.Gainsboro;
+
                     txt.BorderStyle = 0;
                     txt.Visible = true;
+                    //txt.Enabled = false;
+                    List<Label> labelList = new List<Label>();
+                    int c = 0;
+                    for(int k = 0; k < 3; k++)
+                    {
+                        for(int l = 0; l < 3; l++)
+                        {
+                            var label = new Label();
+                            Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.Add(label));
+                            label.Name = txt.Name + "_" + ++c;
+                            label.Text = "" + c;
+                            label.Location = new Point(i * 50 + 16 * l, j * 50 + 16 * k);
+                            label.Size = new System.Drawing.Size(15, 15);
+                            label.ForeColor = Color.Blue;
+                            label.BackColor = Color.Gainsboro;
+                            label.Visible = false;
+                            label.BringToFront();
+                            labelList.Add(label);
+                            //MessageBox.Show(label.Location.X + " " + label.Location.Y);
+                        }
+                    }
+                    //tbLabels.Add(txt, labelList);
                 }
             }
         }
@@ -348,7 +428,7 @@ namespace Client
                                     || ("" + (Int32.Parse(c1.Name) % 10 / 3) + (Int32.Parse(c1.Name) / 30) == ("" + indexT % 10 / 3 + indexT / 30)))
                                     && c1.Text == t.Text)
                             {
-                                c1.BackColor = co;
+                                c1.ForeColor = co;
                             }
                         }
                     }
@@ -373,7 +453,7 @@ namespace Client
                         || ("" + (Int32.Parse(c.Name) % 10 / 3) + (Int32.Parse(c.Name) / 30) == ("" + indexT % 10 / 3 + indexT / 30)))
                         && c.Text == textT)
                 {
-                    t.BackColor = Color.Gainsboro;
+                    t.ForeColor = Color.Black;
                     //MessageBox.Show("OK");
                     foreach (TextBox c1 in textBoxes)
                     {
@@ -395,7 +475,7 @@ namespace Client
                                     //t.BackColor = Color.Gainsboro;
                                     
                                     //MessageBox.Show(c2.Name);
-                                    c2.BackColor = Color.Gainsboro;
+                                    c2.ForeColor = Color.Black;
                                     checkNeighbours(c2, Color.Red);
                                 }
 
@@ -411,5 +491,19 @@ namespace Client
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Pencil_CheckedChanged(object sender, EventArgs e)
+        {
+            isPencil = !isPencil;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Debug");
+        }
     }
 }

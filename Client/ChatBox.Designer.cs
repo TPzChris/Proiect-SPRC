@@ -33,6 +33,8 @@
             this.txtChat = new System.Windows.Forms.TextBox();
             this.sendBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Pencil = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // userlist
@@ -89,11 +91,35 @@
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
             // 
+            // Pencil
+            // 
+            this.Pencil.Appearance = System.Windows.Forms.Appearance.Button;
+            this.Pencil.AutoSize = true;
+            this.Pencil.Location = new System.Drawing.Point(519, 27);
+            this.Pencil.Name = "Pencil";
+            this.Pencil.Size = new System.Drawing.Size(46, 23);
+            this.Pencil.TabIndex = 6;
+            this.Pencil.Text = "Pencil";
+            this.Pencil.UseVisualStyleBackColor = true;
+            this.Pencil.CheckedChanged += new System.EventHandler(this.Pencil_CheckedChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(519, 277);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "BreakPoint";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // ChatBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(967, 470);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Pencil);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.txtChat);
@@ -115,5 +141,7 @@
         private System.Windows.Forms.TextBox txtChat;
         private System.Windows.Forms.Button sendBtn;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox Pencil;
+        private System.Windows.Forms.Button button1;
     }
 }
