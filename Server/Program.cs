@@ -179,6 +179,72 @@ namespace Server
                             Console.WriteLine(user.Username + " has joined this conversation.");
                             break;
 
+                        case Commands.UserCount:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            string userCountMessage = userlist.Count.ToString();
+                            Console.WriteLine("userCountMessage = " + userCountMessage);
+                            con.send(Commands.CreateMessage(Commands.UserCount, Commands.None, userCountMessage));
+                            break;
+
+                        case Commands.FirstIsReady:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            con.send(Commands.CreateMessage(Commands.FirstIsReady, Commands.None, message.Data));
+                            break;
+
+                        case Commands.SecondIsReady:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            con.send(Commands.CreateMessage(Commands.SecondIsReady, Commands.None, message.Data));
+                            break;
+
+                        case Commands.StartGame:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            List<int> numbers = new List<int>();
+                            Sudoku.generateFirstRow(numbers);
+                            Dictionary<int, List<int>> d = new Dictionary<int, List<int>>();
+                            d.Add(0, numbers);
+                            d.Add(1, Sudoku.shiftLeft(numbers, 3));
+                            d.Add(2, Sudoku.shiftLeft(d[1], 3));
+                            d.Add(3, Sudoku.shiftLeft(d[2], 1));
+                            d.Add(4, Sudoku.shiftLeft(d[3], 3));
+                            d.Add(5, Sudoku.shiftLeft(d[4], 3));
+                            d.Add(6, Sudoku.shiftLeft(d[5], 1));
+                            d.Add(7, Sudoku.shiftLeft(d[6], 3));
+                            d.Add(8, Sudoku.shiftLeft(d[7], 3));
+
+                            String generatedSudoku = "";
+                            Random a = new Random();
+                            foreach (KeyValuePair<int, List<int>> k in d)
+                            {
+                                for(int l = 0; l < 6; l++)
+                                {
+                                    int r = a.Next(k.Value.Count);
+                                    k.Value[r] = 0;
+                                }
+                                generatedSudoku += string.Join(",", k.Value.ToArray()) + ",";
+                            }
+
+                            
+
+
+                            con.send(Commands.CreateMessage(Commands.StartGame, Commands.None, generatedSudoku));
+                            break;
+
                         case Commands.PublicMessage:
                             if (user.Status != User.StatusType.Connected)
                             {
@@ -197,44 +263,13 @@ namespace Server
                             }
                             
                             string updateMessagePriv = "(Private) " + userlist[clientAddr].Username + " says : " + message.Data;
-                            //Console.WriteLine(updateMessagePriv);
-                            //string receivers = "user01";
-                            //selectedUsers.ToList().ForEach(x => receivers += x + "/");
-                            //List<string> s = new List<string>();
-                            //s.Add("user01");
-                            //con.send(Commands.CreatePrivateMessage(Commands.PrivateMessage, receivers, updateMessagePriv, s));
-                            /*
-                            //Socket sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                            IPEndPoint ipep = null;
-                            //userlist.ToList().Where(x => x.Value.Username == "user01").ToList().ForEach(y => sk.Bind(ipep = new IPEndPoint(IPAddress.Parse(y.Key), 32000))); 
-                            IPAddress ipaddr;
-                            foreach(KeyValuePair<string, User> j in userlist)
-                            {
-                                if(j.Value.Username == "user01")
-                                {
-                                    IPAddress.TryParse(j.Key, out ipaddr);
-                                    Console.WriteLine("j.ip = {0},\n j.username = {1}", j.Key, j.Value.Username);
-                                    ipep = new IPEndPoint(ipaddr, 32000);
-                                    Console.WriteLine("ipep {0}:{1}\n", ipep.Address, ipep.Port);
-                                    //sk.Bind(ipep);
-                                    break;
-                                }
-                            }
-                             */
 
 
                             List<User> selUsers = new List<User>();
                             userlist.ToList().Where(u => message.Subcommand.Contains(u.Value.Username)).ToList().ForEach(v => selUsers.Add(v.Value));
 
                             selUsers.ForEach(l => con.sendBySpecificSocket(Commands.CreateMessage(Commands.PrivateMessage, Commands.UserList, updateMessagePriv), l.socket));
-                            /*
-                            foreach(User us in userS)
-                            {
-                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.PrivateMessage, Commands.None, updateMessagePriv), us.socket);
-                            }
-                            */
-                            //Console.WriteLine(++ii);
-                            //con.sendBySpecificSocket(Commands.CreatePrivateMessage(Commands.PrivateMessage, receivers, updateMessagePriv, s), sk);
+
                             break;
 
                         case Commands.MalformedCommand:

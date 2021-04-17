@@ -91,6 +91,9 @@ namespace Client
                     incompleteMessage = null;
                 }
 
+                Boolean countOk = false;
+                Boolean usernameOk = false;
+
                 for (int i = 0; i < messages.Length - correction; i++)
                 {
                     Commands.Message message = Commands.DecodeMessage(messages[i]);
@@ -100,7 +103,10 @@ namespace Client
                         case Commands.ValidateUsername:
                             if(message.Subcommand == Commands.Accept)
                             {
-                                con.send(Commands.CreateMessage(Commands.Connect, Commands.Request, null));
+                                //con.send(Commands.CreateMessage(Commands.Connect, Commands.Request, null));
+                                usernameOk = true;
+
+                                con.send(Commands.CreateMessage(Commands.UserCount, Commands.None, null));
                             }
                             else
                             {
@@ -112,8 +118,24 @@ namespace Client
                             con.OnReceiveCompleted -= con_OnReceiveCompleted;
                             BeginInvoke(new FormFunctionCall(OpenChatBox));
                             break;
+
+                        case Commands.UserCount:
+                            int userCount = Int32.Parse(message.Data);
+                            if (userCount < 3)
+                            {
+                                con.send(Commands.CreateMessage(Commands.Connect, Commands.Request, null));
+                            }
+                            else
+                            {
+                                MessageBox.Show("The room is full.");
+                            }
+                            break;
+
                     }
+                    
+
                 }
+                
             }
         }
 

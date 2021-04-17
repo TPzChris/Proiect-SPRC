@@ -2,6 +2,7 @@
 using Server;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,17 @@ namespace Client
         private bool isPencil = false;
         Dictionary<TextBox, List<Label>> tbLabels = new Dictionary<TextBox, List<Label>>();
         List<Label> activeLabels = new List<Label>();
+        int userCount = 0;
+        TextBox[] cells;
+        List<Control> textBoxes;
+
+
 
         public ChatBox(TCPConnection con)
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
+            button2.Enabled = false;
             this.con = con;
             con.OnReceiveCompleted += con_OnReceiveCompleted;
             con.OnExceptionRaised += con_OnExceptionRaised;
@@ -61,7 +68,7 @@ namespace Client
                 text = incompleteMessage + text;
             }
 
-            chatField.Text += text + "\r\n";
+            //chatField.Text += text + "\r\n";
 
             chatField.SelectionStart = chatField.TextLength;
             chatField.ScrollToCaret();
@@ -93,11 +100,71 @@ namespace Client
                             {
                                 case Commands.Add:
                                     userlist.Items.Add(message.Data);
+                                    chatField.Text += message.Data + " has connected.\r\n";
+                                    chatField.SelectionStart = chatField.TextLength;
+                                    chatField.ScrollToCaret();
                                     break;
                                 case Commands.Remove:
                                     userlist.Items.Remove(message.Data);
                                     chatField.Text += message.Data + " has logout.\r\n";
                                     break;
+                            }
+                            break;
+
+                        case Commands.UserCount:
+                            userCount = Int32.Parse(message.Data);
+                            if (userCount > 1)
+                            {
+                                button2.Enabled = true;
+                            }
+                            else
+                            {
+                                button2.Enabled = false;
+                            }
+                            break;
+
+                        case Commands.FirstIsReady:
+                            if (message.Data != con.getLocalEndPoint().ToString())
+                            {
+                                DialogResult dialogResult = MessageBox.Show("Do you want to start a new game?", "New Game", MessageBoxButtons.YesNo);
+                                if (dialogResult == DialogResult.Yes)
+                                {
+                                    con.send(Commands.CreateMessage(Commands.SecondIsReady, Commands.None, "yes"));
+                                }
+                                else if (dialogResult == DialogResult.No)
+                                {
+                                    con.send(Commands.CreateMessage(Commands.SecondIsReady, Commands.None, "no"));
+                                }
+                            }
+                            break;
+
+                        case Commands.SecondIsReady:
+                            if (message.Data == "yes")
+                            {
+                                con.send(Commands.CreateMessage(Commands.StartGame, Commands.None, null));
+                            }
+                            break;
+
+                        case Commands.StartGame:
+                            Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<TextBox>().ToList().Where(t1 => t1.Text == "").ToList().ForEach(t2 => { t2.Enabled = true; t2.Visible = true; }));
+                            Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().ForEach(l1 => l1.Enabled = true));
+                            string[] board = message.Data.Split(',');
+                            for(int el = 0; el < textBoxes.Count; el++)
+                            {
+                                if (board[el] != "0")
+                                {
+                                    //MessageBox.Show(string.Format("el = {0}; elAt = {1}", board[el], textBoxes.ElementAt(el).Name));
+                                    textBoxes.ElementAt(el).Text = board[el];
+                                    textBoxes.ElementAt(el).Enabled = false;
+                                    textBoxes.ElementAt(el).ForeColor = Color.Blue;
+                                }
+                                else
+                                {
+                                    textBoxes.ElementAt(el).Text = "";
+                                }
+
+                                Pencil.Enabled = true;
+                                Pencil.Visible = true;
                             }
                             break;
 
@@ -264,7 +331,7 @@ namespace Client
         public void ValidateTextBoxes()
         {
 
-            var textBoxes = new List<Control>();
+            textBoxes = new List<Control>();
             Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<TextBox>().ToList().ForEach(t1 => textBoxes.Add(t1)));
             foreach (TextBox t in textBoxes)
             {
@@ -339,7 +406,9 @@ namespace Client
                         .ForEach(t => t.Controls.OfType<Label>()
                         .ToList()
                         .Where(x => x.Name.StartsWith(cell.Name + "_")).ToList().ForEach(y => y.Visible = false));
-                    tbLabels[cell].Clear();
+                    
+                    tbLabels[cell] = null; 
+                    
                     if (cell.Text != "")
                     {
                         oldValues[int.Parse(cell.Name)] = cell.Text;
@@ -357,7 +426,7 @@ namespace Client
 
         private void generateCells()
         {
-            TextBox[] cells = new TextBox[100];
+            cells = new TextBox[100];
             
             for (int i = 0; i < 9; i++)
             {
@@ -369,13 +438,13 @@ namespace Client
                     cells[i + 10 * j] = txt;
                     txt.Name = (i + 10 * j).ToString();
                     txt.Text = "";
-                    txt.Location = new Point(15 + i * 50, 15 + j * 50);
+                    txt.Location = new Point(15 + j * 50, 15 + i * 50);
                     txt.ForeColor = Color.Black;
                     txt.BackColor = Color.Gainsboro;
 
                     txt.BorderStyle = 0;
                     txt.Visible = true;
-                    //txt.Enabled = false;
+                    txt.Enabled = false;
                     List<Label> labelList = new List<Label>();
                     int c = 0;
                     for(int k = 0; k < 3; k++)
@@ -386,11 +455,12 @@ namespace Client
                             Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.Add(label));
                             label.Name = txt.Name + "_" + ++c;
                             label.Text = "" + c;
-                            label.Location = new Point(i * 50 + 16 * l, j * 50 + 16 * k);
+                            label.Location = new Point(j * 50 + 16 * l, i * 50 + 16 * k);
                             label.Size = new System.Drawing.Size(15, 15);
                             label.ForeColor = Color.Blue;
                             label.BackColor = Color.Gainsboro;
                             label.Visible = false;
+                            label.Enabled = false;
                             label.BringToFront();
                             labelList.Add(label);
                             //MessageBox.Show(label.Location.X + " " + label.Location.Y);
@@ -504,6 +574,21 @@ namespace Client
         private void button1_Click_1(object sender, EventArgs e)
         {
             MessageBox.Show("Debug");
+        }
+
+        private void userlist_CollectionChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void userlist_SizeChanged(object sender, EventArgs e)
+        {
+            con.send(Commands.CreateMessage(Commands.UserCount, Commands.Request, null));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            con.send(Commands.CreateMessage(Commands.FirstIsReady, Commands.Request, con.getLocalEndPoint().ToString()));
         }
     }
 }

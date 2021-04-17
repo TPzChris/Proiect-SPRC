@@ -35,6 +35,10 @@ namespace Server
         public const string Remove = "Rem";
         public const string None = "None";
 
+        public const string UserCount = "Users";
+        public const string FirstIsReady = "FirstIsReady";
+        public const string SecondIsReady = "SecondIsReady";
+        public const string StartGame = "StartGame";
 
         public static byte[] CreateMessage(string command, string subcommand, string data)
         {

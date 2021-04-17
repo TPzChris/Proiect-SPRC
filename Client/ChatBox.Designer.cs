@@ -35,6 +35,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Pencil = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // userlist
@@ -46,6 +47,7 @@
             this.userlist.Size = new System.Drawing.Size(84, 251);
             this.userlist.TabIndex = 0;
             this.userlist.SelectedIndexChanged += new System.EventHandler(this.userlist_SelectedIndexChanged);
+            this.userlist.SizeChanged += new System.EventHandler(this.userlist_SizeChanged);
             this.userlist.MouseDown += new System.Windows.Forms.MouseEventHandler(this.userlist_MouseDown);
             // 
             // chatField
@@ -71,7 +73,6 @@
             // 
             // sendBtn
             // 
-            this.sendBtn.Enabled = false;
             this.sendBtn.Location = new System.Drawing.Point(790, 243);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(75, 23);
@@ -95,12 +96,14 @@
             // 
             this.Pencil.Appearance = System.Windows.Forms.Appearance.Button;
             this.Pencil.AutoSize = true;
+            this.Pencil.Enabled = false;
             this.Pencil.Location = new System.Drawing.Point(519, 27);
             this.Pencil.Name = "Pencil";
             this.Pencil.Size = new System.Drawing.Size(46, 23);
             this.Pencil.TabIndex = 6;
             this.Pencil.Text = "Pencil";
             this.Pencil.UseVisualStyleBackColor = true;
+            this.Pencil.Visible = false;
             this.Pencil.CheckedChanged += new System.EventHandler(this.Pencil_CheckedChanged);
             // 
             // button1
@@ -113,11 +116,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(677, 374);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Start";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // ChatBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(967, 470);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Pencil);
             this.Controls.Add(this.panel1);
@@ -143,5 +157,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox Pencil;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

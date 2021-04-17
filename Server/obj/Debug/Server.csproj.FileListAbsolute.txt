@@ -43,3 +43,13 @@ W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.csproj.CoreCompil
 W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.csproj.CopyComplete
 W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.exe
 W:\Facultate\SPRC\Teme\Tema 3\TcpAsync\Server\obj\Debug\Server.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\bin\Debug\Server.exe.config
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\bin\Debug\Server.exe
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\bin\Debug\Server.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\bin\Debug\IConnection.dll
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\bin\Debug\IConnection.pdb
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\obj\Debug\Server.csprojAssemblyReference.cache
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\obj\Debug\Server.csproj.CopyComplete
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\obj\Debug\Server.exe
+W:\Facultate\SPRC\Proiect\Proiect SPRC\Server\obj\Debug\Server.pdb
