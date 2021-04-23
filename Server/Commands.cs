@@ -43,6 +43,10 @@ namespace Server
         public const string StartGame = "StartGame";
         public const string Grid = "Grid";
         public const string Label = "Label";
+        public const string Timer = "Timer";
+        public const string FirstSubmit = "FirstSubmit";
+        public const string SecondSubmit = "SecondSubmit";
+        public const string CheckGame = "CheckGame";
 
         public static byte[] CreateMessage(string command, string subcommand, string data)
         {

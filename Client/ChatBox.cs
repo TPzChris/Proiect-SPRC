@@ -3,6 +3,7 @@ using Server;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace Client
         List<Control> textBoxes;
         private bool start = false;
         private bool changeTextClient = false;
+        private Timer timer1 = new Timer();
+        private bool checkGame = false;
 
 
         public ChatBox(TCPConnection con)
@@ -37,6 +40,8 @@ namespace Client
             this.con = con;
             con.OnReceiveCompleted += con_OnReceiveCompleted;
             con.OnExceptionRaised += con_OnExceptionRaised;
+            labelTimer.Width = 70;
+            labelTimer.Height = 40;
             for (int h = 0; h < 81; h++)
             {
                 oldValues.Add(h, "");
@@ -173,6 +178,20 @@ namespace Client
                                 Pencil.Visible = true;
                             }
                             start = true;
+
+                            
+                            timer1.Tick += new EventHandler(timer1_Tick);
+
+                            timer1.Interval = 1000;
+
+                            timer1.Enabled = true;
+
+                            con.send(Commands.CreateMessage(Commands.Timer, Commands.None, null));
+
+                            break;
+
+                        case Commands.Timer:
+                            labelTimer.Text =  message.Data;
                             break;
 
                         case Commands.Grid:
@@ -248,6 +267,48 @@ namespace Client
                             Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().Where(l1 => l1.Name.Equals(message.Data)).ToList().ForEach(l2 => { l2.Enabled = Boolean.Parse(message.Subcommand); l2.Visible = Boolean.Parse(message.Subcommand); }));
                             break;
 
+                        case Commands.FirstSubmit:
+                            if (message.Data != con.getLocalEndPoint().ToString())
+                            {
+                                DialogResult dialogResult = MessageBox.Show("Do you want to submit?", "Submit", MessageBoxButtons.YesNo);
+                                if (dialogResult == DialogResult.Yes)
+                                {
+                                    con.send(Commands.CreateMessage(Commands.SecondSubmit, Commands.None, "yes"));
+                                }
+                                else if (dialogResult == DialogResult.No)
+                                {
+                                    con.send(Commands.CreateMessage(Commands.SecondSubmit, Commands.None, "no"));
+                                }
+                            }
+                            break;
+
+                        case Commands.SecondSubmit:
+                            if (message.Data == "yes")
+                            {
+                                Controls.Find("panel1", true).ToList().ForEach(t => checkGame = t.Controls.OfType<TextBox>().ToList().Where(x => (x.Text == "") || (x.ForeColor == Color.Red)).ToList().Any());
+                                if (checkGame)
+                                {
+                                    con.send(Commands.CreateMessage(Commands.CheckGame, Commands.None, true.ToString()));
+                                }
+                                else
+                                {
+                                    con.send(Commands.CreateMessage(Commands.CheckGame, Commands.None, false.ToString()));
+                                }
+                                
+                            }
+                            break;
+
+                        case Commands.CheckGame:
+                            if (Boolean.Parse(message.Data))
+                            {
+                                MessageBox.Show("Meciul nu este gata...");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Totul este corect!");
+                            }
+                            break;
+
                         case Commands.Disconnect:
                             userlist.Items.Remove(message.Data);
                             chatField.Text += message.Data + " lost connection.\r\n";
@@ -269,6 +330,17 @@ namespace Client
                     }
                 }
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.labelTime.Text = DateTime.Now.ToString();
+            
         }
 
         void con_OnReceiveCompleted(object sender, ReceiveCompletedEventArgs args)
@@ -706,7 +778,7 @@ namespace Client
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Debug");
+            con.send(Commands.CreateMessage(Commands.FirstSubmit, Commands.None, con.getLocalEndPoint().ToString()));
         }
 
         private void userlist_CollectionChanged(object sender, EventArgs e)
@@ -756,6 +828,9 @@ namespace Client
             con.send(Commands.CreateMessage(Commands.Grid, con.getLocalEndPoint().ToString(), string.Join(",", listTuple.ToArray() as object[])));
         }
 
-        
+        private void labelTimer_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
