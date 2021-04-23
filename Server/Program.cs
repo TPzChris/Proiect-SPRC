@@ -239,10 +239,25 @@ namespace Server
                                 generatedSudoku += string.Join(",", k.Value.ToArray()) + ",";
                             }
 
-                            
-
-
                             con.send(Commands.CreateMessage(Commands.StartGame, Commands.None, generatedSudoku));
+                            break;
+
+                        case Commands.Grid:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            con.send(Commands.CreateMessage(Commands.Grid, message.Subcommand, message.Data));
+                            break;
+
+                        case Commands.Label:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            con.send(Commands.CreateMessage(Commands.Label, message.Subcommand, message.Data));
                             break;
 
                         case Commands.PublicMessage:

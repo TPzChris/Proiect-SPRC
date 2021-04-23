@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using static Server.Program;
 
@@ -39,12 +41,25 @@ namespace Server
         public const string FirstIsReady = "FirstIsReady";
         public const string SecondIsReady = "SecondIsReady";
         public const string StartGame = "StartGame";
+        public const string Grid = "Grid";
+        public const string Label = "Label";
 
         public static byte[] CreateMessage(string command, string subcommand, string data)
         {
             if (command == null) return null;
             if (subcommand == null) subcommand = None;
             if (data == null) data = None;
+
+            return Encoding.Unicode.GetBytes(command + CommandDelim + subcommand + CommandDelim + data + EndMessageDelim);
+        }
+
+        public static byte[] CreateMessageDictionary(string command, string subcommand, MemoryStream data)
+        {
+            if (command == null) return null;
+            if (subcommand == null) subcommand = None;
+            //if (data == null) data = None;
+
+            
 
             return Encoding.Unicode.GetBytes(command + CommandDelim + subcommand + CommandDelim + data + EndMessageDelim);
         }

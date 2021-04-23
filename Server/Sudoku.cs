@@ -33,8 +33,7 @@ namespace Server
         //    get { return string.Join(",", s2.ToArray()); }
         //}
 
-        Dictionary<int, List<int>> randomSudoku = new Dictionary<int, List<int>>();
-
+        
         public static void generateFirstRow(List<int> listNumbers)
         {
             Random rand = new Random();

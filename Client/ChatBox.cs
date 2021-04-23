@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Client
@@ -22,7 +25,8 @@ namespace Client
         int userCount = 0;
         TextBox[] cells;
         List<Control> textBoxes;
-
+        private bool start = false;
+        private bool changeTextClient = false;
 
 
         public ChatBox(TCPConnection con)
@@ -146,8 +150,11 @@ namespace Client
                             break;
 
                         case Commands.StartGame:
+                            start = false;
+                            Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<TextBox>().ToList().ForEach(t1 => t1.Text = ""));
                             Controls.Find("panel1", true).ToList().ForEach(t => t.Controls.OfType<TextBox>().ToList().Where(t1 => t1.Text == "").ToList().ForEach(t2 => { t2.Enabled = true; t2.Visible = true; }));
                             Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().ForEach(l1 => l1.Enabled = true));
+                            Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().ForEach(l1 => l1.VisibleChanged += label_onVisibleChanged));
                             string[] board = message.Data.Split(',');
                             for(int el = 0; el < textBoxes.Count; el++)
                             {
@@ -162,10 +169,83 @@ namespace Client
                                 {
                                     textBoxes.ElementAt(el).Text = "";
                                 }
-
                                 Pencil.Enabled = true;
                                 Pencil.Visible = true;
                             }
+                            start = true;
+                            break;
+
+                        case Commands.Grid:
+                            //var mStream = new MemoryStream();
+                            //var binFormatter = new BinaryFormatter();
+
+                            //Where 'objectBytes' is your byte array.
+                            //mStream.Write(message.Data., 0, message.Data.Length);
+                            //mStream.Position = 0;
+
+                            //var myObject = binFormatter.Deserialize(mStream) as YourObjectType;
+
+                            //MessageBox.Show(message.Data);
+                            //List<Tuple<string, string, string>> tupleList = message.Data.ToList();
+                            if (!con.getLocalEndPoint().ToString().Equals(message.Subcommand))
+                            {
+                                MatchCollection tbRegex = Regex.Matches(message.Data, "[_][_]");
+
+                                //MessageBox.Show(String.Format("local = {0}; subcommand = {1}", con.getLocalEndPoint().ToString(), message.Subcommand));
+
+                                string tb = message.Data.Substring(0, message.Data.IndexOf('_'));
+                                string tbVal = "";
+                                string lb = "";
+
+                                if (tbRegex.Count == 0 && !'_'.Equals(message.Data.Last()))
+                                {
+                                    //MessageBox.Show(message.Data + "  " + tb);
+                                    tbVal = message.Data.Substring(message.Data.IndexOf('_') + 1, 1);
+                                }
+                                changeTextClient = true;
+
+                                
+                                //lb = message.Data.Substring(message.Data.LastIndexOf('_') + 1);
+                                //List<string> labels = lb.Split('-').ToList();
+                                //Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.OfType<TextBox>().ToList().Where(x1 => (x1.Name.Equals(tb)) && (!x1.Text.Equals(tbVal))).First().Text = tbVal);//.Text = tbVal);
+                                //Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().Where(l1 => (l1.Name.StartsWith(tb + "_")) && (labels.Contains(l1.Text))).ToList().ForEach(l2 => l2.Visible = true));
+                                //Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().Where(l1 => (l1.Name.StartsWith(tb + "_")) && (!labels.Contains(l1.Text))).ToList().ForEach(l2 => l2.Visible = false));
+
+                                List<Tuple<TextBox, List<Label>>> list = tbLabels.Select(x => new Tuple<TextBox, List<Label>>(x.Key, x.Value)).ToList();
+
+                                TextBox t = new TextBox();
+                                t = list.Find(x => x.Item1.Name == tb).Item1;
+                                t.Text = tbVal;
+                                if (t.Text != "")
+                                {
+                                    oldValues[int.Parse(t.Name)] = t.Text;
+                                    checkNeighbours(t, Color.Red);
+                                }
+                                else
+                                {
+                                    fixNeighbours(t);
+                                }
+
+                                //List<Label> labs = new List<Label>();
+                                //labs = list.Find(x => x.Item1.Name == tb).Item2;
+                                //if(labs != null)
+                                //{
+                                //    //labs.Where(x => labels.Contains(x.Text)).ToList().ForEach(x1 => x1.Enabled = true);
+                                //    //labs.Where(x => !labels.Contains(x.Text)).ToList().ForEach(x1 => x1.Enabled = false);
+                                //    //tbLabels[t] = labs;
+                                //}
+                                
+                                //tbLabels;
+
+
+                                changeTextClient = false;
+                                //MessageBox.Show(string.Format("tb = {0}; tbValue = {1}; lb = {2}", tb, tbVal, lb));
+                            }
+                            
+                            break;
+
+                        case Commands.Label:
+                            Controls.Find("panel1", true).ToList().ForEach(l => l.Controls.OfType<Label>().ToList().Where(l1 => l1.Name.Equals(message.Data)).ToList().ForEach(l2 => { l2.Enabled = Boolean.Parse(message.Subcommand); l2.Visible = Boolean.Parse(message.Subcommand); }));
                             break;
 
                         case Commands.Disconnect:
@@ -373,9 +453,10 @@ namespace Client
             {
                 //MessageBox.Show("Sunt in key pressed");
                 cell.Clear();
+                tbLabels[cell] = null;
                 //MessageBox.Show(getIndexOfCell(cell));
             }
-            else
+            else if(numbers.Contains(cell.Text) && !changeTextClient)
             {
                 if (isPencil == true)
                 {
@@ -420,6 +501,37 @@ namespace Client
                     }
                 }
             }
+            if (start && numbers.Contains(cell.Text))
+            {
+                //TB cell
+                //LB activeLabels
+                string sendData = cell.Name + "_" + cell.Text + "_";
+                activeLabels.ForEach(l => sendData += l.Text + "-");
+                sendData = sendData.Remove(sendData.Length - 1);
+                List<Tuple<string, string, List<string>>> listTuple = new List<Tuple<string, string, List<String>>>();
+                Tuple<string, string, List<String>> tuple;
+                foreach (KeyValuePair<TextBox, List<Label>> k in tbLabels)
+                {
+                    if (k.Value != null)
+                    {
+                        List<String> labels = new List<String>();
+                        foreach (Label s in k.Value)
+                        {
+                            labels.Add(s.Text);
+                        }
+                        tuple = new Tuple<String, String, List<String>>(k.Key.Name, k.Key.Text, labels);
+                    }
+                    else
+                    {
+                        tuple = new Tuple<String, String, List<String>>(k.Key.Name, k.Key.Text, null);
+                    }
+
+                    listTuple.Add(tuple);
+                }
+                //string.Join(",", listTuple.ToArray() as object[])
+                con.send(Commands.CreateMessage(Commands.Grid, con.getLocalEndPoint().ToString(), sendData));
+            }
+            
 
         }
 
@@ -427,12 +539,23 @@ namespace Client
         private void generateCells()
         {
             cells = new TextBox[100];
-            
+
+            tbLabels = new Dictionary<TextBox, List<Label>>();
+            for (int y = 0; y < 89; y++)
+            {
+                TextBox t = new TextBox();
+                t.Name = y.ToString();
+                if (y % 10 != 9)
+                {
+                    //tbLabels.Add(t, null);
+                }
+            }
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
                     var txt = new TextBox();
+                    
                     txt.Size = new System.Drawing.Size(20, 20);
                     Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.Add(txt));
                     cells[i + 10 * j] = txt;
@@ -441,10 +564,12 @@ namespace Client
                     txt.Location = new Point(15 + j * 50, 15 + i * 50);
                     txt.ForeColor = Color.Black;
                     txt.BackColor = Color.Gainsboro;
-
+                    txt.MaxLength = 1;
                     txt.BorderStyle = 0;
                     txt.Visible = true;
                     txt.Enabled = false;
+                    
+                         
                     List<Label> labelList = new List<Label>();
                     int c = 0;
                     for(int k = 0; k < 3; k++)
@@ -462,16 +587,24 @@ namespace Client
                             label.Visible = false;
                             label.Enabled = false;
                             label.BringToFront();
+
                             labelList.Add(label);
+
                             //MessageBox.Show(label.Location.X + " " + label.Location.Y);
                         }
                     }
-                    //tbLabels.Add(txt, labelList);
+                    tbLabels.Add(txt, null);
+                    //tbLabels[txt] = labelList;
                 }
             }
         }
 
-
+        private void label_onVisibleChanged(object sender, EventArgs e)
+        {
+            Label send = sender as Label;
+            //MessageBox.Show(string.Format("Name = {0}; Enabled = {1}", send.Name, send.Enabled));
+            con.send(Commands.CreateMessage(Commands.Label, send.Visible.ToString(), send.Name));
+        }
 
         private void checkNeighbours(TextBox t, Color co)
         {
@@ -590,5 +723,39 @@ namespace Client
         {
             con.send(Commands.CreateMessage(Commands.FirstIsReady, Commands.Request, con.getLocalEndPoint().ToString()));
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            List<Tuple<string, string, List<string>>> listTuple = new List<Tuple<string, string, List<String>>>();
+            Tuple<string, string, List<String>> tuple;
+            foreach (KeyValuePair<TextBox, List<Label>> k in tbLabels)
+            {
+                if(k.Value != null)
+                {
+                    List<String> labels = new List<String>();
+                    foreach (Label s in k.Value)
+                    {
+                        labels.Add(s.Text);
+                    }
+                    tuple = new Tuple<String, String, List<String>>(k.Key.Name, k.Key.Text, null); //labels
+                }
+                else
+                {
+                    tuple = new Tuple<String, String, List<String>>(k.Key.Name, k.Key.Text, null);
+                }
+
+                listTuple.Add(tuple);
+            }
+            //Tuple<string, string, List<string>> tuple = new Tuple<String, String, List<string>>();
+            //var binFormatter = new BinaryFormatter();
+            //var mStream = new MemoryStream();
+            //binFormatter.Serialize(mStream, listTuple);
+
+            //This gives you the byte array.
+            //mStream.ToArray();
+            con.send(Commands.CreateMessage(Commands.Grid, con.getLocalEndPoint().ToString(), string.Join(",", listTuple.ToArray() as object[])));
+        }
+
+        
     }
 }
