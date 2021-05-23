@@ -30,6 +30,7 @@ namespace Client
         private bool changeTextClient = false;
         private Timer timer1 = new Timer();
         private bool checkGame = false;
+        private List<Tuple<Label, bool>> labelSet = new List<Tuple<Label, bool>>();
 
 
         public ChatBox(TCPConnection con)
@@ -309,6 +310,10 @@ namespace Client
                             }
                             break;
 
+                        case Commands.ActivateLabels:
+                            Controls.Find("panel1", true).ToList().ForEach(x => x.Controls.OfType<TextBox>().ToList().Where(y => y.Name == message.Subcommand).ToList().ForEach(z => tbLabels[z].Where(c => c.Text == message.Data).ToList().ForEach(b => b.Visible = true) ));
+                            break;
+
                         case Commands.Disconnect:
                             userlist.Items.Remove(message.Data);
                             chatField.Text += message.Data + " lost connection.\r\n";
@@ -543,32 +548,38 @@ namespace Client
                     {
                         label.Visible = false;
                         cell.BringToFront();
-                        activeLabels.Remove(label);
+                        tbLabels[cell].Remove(label);
                     }
                     else
                     {
                         label.Visible = true;
-                        label.BringToFront(); 
-                        activeLabels.Add(label);
+                        label.BringToFront();
+                        tbLabels[cell].Add(label);
                     }
-                    tbLabels[cell] = activeLabels;
+                    //tbLabels[cell] = activeLabels;
+                    //tbLabels[cell].ForEach(x => MessageBox.Show(String.Format("cell = {0}, tbLabels[cell] = {1}", cell.Name, x.Text)));
+                   // MessageBox.Show("");
                 }
                 else
                 {
+                    
                     Controls.Find("panel1", true).ToList()
                         .ForEach(t => t.Controls.OfType<Label>()
                         .ToList()
                         .Where(x => x.Name.StartsWith(cell.Name + "_")).ToList().ForEach(y => y.Visible = false));
                     
-                    tbLabels[cell] = null; 
+                    //tbLabels[cell] = null; 
                     
                     if (cell.Text != "")
                     {
+                        
                         oldValues[int.Parse(cell.Name)] = cell.Text;
                         checkNeighbours(cell, Color.Red);
                     }
                     else
                     {
+                        tbLabels[cell].ForEach(x => { con.send(Commands.CreateMessage(Commands.ActivateLabels, cell.Name, x.Text)); MessageBox.Show(String.Format("x.Text = {0}", x.Text));  });
+                        
                         fixNeighbours(cell);
                     }
                 }
@@ -579,6 +590,7 @@ namespace Client
                 //LB activeLabels
                 string sendData = cell.Name + "_" + cell.Text + "_";
                 activeLabels.ForEach(l => sendData += l.Text + "-");
+                
                 sendData = sendData.Remove(sendData.Length - 1);
                 List<Tuple<string, string, List<string>>> listTuple = new List<Tuple<string, string, List<String>>>();
                 Tuple<string, string, List<String>> tuple;
@@ -603,7 +615,7 @@ namespace Client
                 //string.Join(",", listTuple.ToArray() as object[])
                 con.send(Commands.CreateMessage(Commands.Grid, con.getLocalEndPoint().ToString(), sendData));
             }
-            
+
 
         }
 
@@ -661,12 +673,14 @@ namespace Client
                             label.BringToFront();
 
                             labelList.Add(label);
-
+                            Tuple<Label, bool> labelTuple = new Tuple<Label, bool>(label, label.Visible);
+                            labelSet.Add(labelTuple);
                             //MessageBox.Show(label.Location.X + " " + label.Location.Y);
                         }
                     }
                     tbLabels.Add(txt, null);
                     //tbLabels[txt] = labelList;
+                    tbLabels[txt] = new List<Label>();
                 }
             }
         }
@@ -674,6 +688,17 @@ namespace Client
         private void label_onVisibleChanged(object sender, EventArgs e)
         {
             Label send = sender as Label;
+
+            //foreach(Tuple<Label, bool> x in labelSet)
+            //{
+            //    if (x.Item1.Name.Equals(send.Name))
+            //    {
+            //        labelSet.Remove(x);
+            //        Tuple<Label, bool> sendAsTuple = new Tuple<Label, bool>(send, send.Visible);
+            //        labelSet.Add(sendAsTuple);
+            //    }
+            //}
+
             //MessageBox.Show(string.Format("Name = {0}; Enabled = {1}", send.Name, send.Enabled));
             con.send(Commands.CreateMessage(Commands.Label, send.Visible.ToString(), send.Name));
         }
@@ -831,6 +856,11 @@ namespace Client
         private void labelTimer_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

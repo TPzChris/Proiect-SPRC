@@ -47,6 +47,7 @@ namespace Server
         public const string FirstSubmit = "FirstSubmit";
         public const string SecondSubmit = "SecondSubmit";
         public const string CheckGame = "CheckGame";
+        public const string ActivateLabels = "ActivateLabels";
 
         public static byte[] CreateMessage(string command, string subcommand, string data)
         {

@@ -236,7 +236,7 @@ namespace Server
                             Random a = new Random();
                             foreach (KeyValuePair<int, List<int>> k in d)
                             {
-                                for(int l = 0; l < 6; l++)
+                                for(int l = 0; l < 2; l++)
                                 {
                                     int r = a.Next(k.Value.Count);
                                     k.Value[r] = 0;
@@ -310,6 +310,15 @@ namespace Server
                             con.send(Commands.CreateMessage(Commands.CheckGame, Commands.None, message.Data));
                             break;
 
+                        case Commands.ActivateLabels:
+                            if (user.Status != User.StatusType.Connected)
+                            {
+                                con.sendBySpecificSocket(Commands.CreateMessage(Commands.InvalidRequest, Commands.None, "Invalid request for current state."), rdArgs.remoteSock);
+                            }
+
+                            con.send(Commands.CreateMessage(Commands.ActivateLabels, message.Subcommand, message.Data));
+                            break;
+
                         case Commands.PublicMessage:
                             if (user.Status != User.StatusType.Connected)
                             {
@@ -356,7 +365,7 @@ namespace Server
                 minutes++;
                 seconds = 0;
             }
-            string time = string.Format("{0}:{1}", minutes.ToString("00"), seconds.ToString("00"));
+            string time = string.Format("{0}:{1}", minutes.ToString("00"), (seconds / 2).ToString("00"));
             con.send(Commands.CreateMessage(Commands.Timer, Commands.None, time));
         }
     }
